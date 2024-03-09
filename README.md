@@ -45,7 +45,7 @@ In our project, we take the pretrained model from part-1 and apply TPT to adapt 
 - tpt_classification
 
 <br>
-<img align="center" src="images/TPT-classification.png">
+<img align="center" src="images/TPT-Classification.png">
 <p align="center">Figure: TPT for Image Classification</p>
 
 #### 2. DiffTPT + CoOp
