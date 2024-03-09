@@ -79,9 +79,31 @@ alignment loss from the distribution shift is combined with the entropy loss to 
 
 ### Results
 #### 1. TPT + CoOp
-#### 2. DiffTPT + CoOp
+<br>
+<img align="center" src="images/TPT-Permformance-Analaysis-1.png">
+<p align="center">Figure: TPT Performance Analysis</p>
 
-### Conclusion
+<br>
+<img align="center" src="images/TPT-Permformance-Analaysis-2.png">
+<p align="center">Figure: TPT Performance Analysis Over Augmentation Hyperparameters-1</p>
+
+<br>
+<img align="center" src="images/TPT-Permformance-Analaysis-3.png">
+<p align="center">Figure: TPT Performance Analysis Over Augmentation Hyperparameters-2</p>
+
+From above results, we can see that TPT improves the performance of the model on the target dataset by 5% as compared to CoOp. We also observed that TPT is sensitive to the quality of the augmentations and the diversity of the augmentations. And based on these observations, we explored DiffTPT to generate diverse augmentations for prompt tuning to improve the performance of the model.
+
+#### 2. DiffTPT + CoOp
+<br>
+<img align="center" src="images/DiffTPT-Performance-Analysis.png">
+
+### References
+- [TPT](https://azshue.github.io/TPT/)
+- [DiffTPT](https://arxiv.org/abs/2308.06038)
+- [AlignedPrompts](https://arxiv.org/abs/2311.01459)
+- [Learning-Prompts-for-Transfer-Learning](www.github.com/MisterMandarino/Learning-Prompts-for-Transfer-Learning)
+- [CLIP](www.github.com/openai/CLIP)
+- [Awesome-Test-Time-Adaptation](https://github.com/tim-learn/awesome-test-time-adaptation)
 
 
 
