@@ -22,6 +22,67 @@ Test-Time Adaptation (TTA) doesn't require any training data and can be applied 
 <img align="center" src="images/TTA.png">
 <p align="center">Figure: Test-Time Adaptation</p>
 
+## Methodology
+From part 1 of Prompt Learning, we learned prompts for a given task using a small dataset. Then, we adapted the trained model from part-1, and optimized the prompts at test-time using the target data to improve the performance of the model. We explored the following methods for test-time adaptation:
+
+### Experiment Baselines
+We did experiments on the following baselines and evaluate the performance on Cross-datasets evaluation (Oxford_Pets, Food101, CIFAR10):
+
+#### 1. TPT + CoOP
+TPT tunes prompts on the fly with a single test sample. The tuned prompt is adapted to each task on each specific test sample. TPT retains the zero-shot generalization setting since no additional training data or annotations are used. For image classification, it optimizes the prompt by minimizing the entropy with confidence selection method, leading to consistent predictions across different augmented views of each test sample. Since data is unlabelled they used unsupervised loss to compute average probability distribution as the mean of class probabilities over augmented views. Also, augmented views of an test image may lack important information needed to classify or can have noisy views, so they used a confidence selection method to select the most confident view for prompt tuning. for the further details, please refer to the [paper]((https://azshue.github.io/TPT/)).
+
+In our project, we take the pretrained model from part-1 and apply TPT to adapt the learned prompts at test-time to improve the performance of the model.
+
+##### TPT for image classification task 
+- Pre-trained CLIP 
+  - TextEncoder:
+  - ImageEncode
+- CoOp 
+  - ClipTestTimeTuning 
+  - PromptLearner
+- AugMix
+  - AugMixAugmenter
+- tpt_classification
+
+<br>
+<img align="center" src="images/TPT-classification.png">
+<p align="center">Figure: TPT for Image Classification</p>
+
+#### 2. DiffTPT + CoOp
+DiffTPT (Diverse Data Augmentation with Diffusions for Effective Test-time Prompt Tuning) is a method that uses Diffusion models to generate diverse data augmentations for prompt tuning. It uses a diffusion model to generate diverse augmentations for each test sample and then uses these augmentations to tune the prompt. Based on our experiments with TPT method, we observed that TPT is sensitive to the quality of the augmentations and the diversity of the augmentations. Therefore, we explored DiffTPT to generate diverse augmentations for prompt tuning to improve the performance of the model. For the further details, please refer to the [paper](https://arxiv.org/abs/2308.06038).
+
+##### DiffTPT for image classification task
+- Pre-trained CLIP 
+  - TextEncoder:
+  - ImageEncode
+- CoOp 
+  - ClipTestTimeTuning 
+  - PromptLearner
+- AugmentationGenerator
+  - StableDiffusionImageVariationPipeline
+- Diff_tpt_classification
+
+<br>
+<img align="center" src="images/DiffTPT-Classification.png">
+<p align="center">Figure: DiffTPT for Image Classification</p>
+
+#### 3. AlignedPrompts + CoOp
+AlignedPrompts (Align Your Prompts: Test-Time Prompting with Distribution Alignment for Zero-Shot Generalization) is a method that aligns the prompt with the target data distribution to improve the performance of the model. It uses a distribution alignment method to align the prompt with the target data distribution. At test time, a
+single test sample along with its augmented views is passed through the CLIP image encoder, and the text labels
+are passed to the CLIP text encoder. The token distribution statistics – mean and variance – of the test sample
+are aligned with the offline computed source data statistics using a distribution alignment loss. The resulting
+alignment loss from the distribution shift is combined with the entropy loss to update the multi-modal prompts. For the further details, please refer to the [paper](https://arxiv.org/abs/2311.01459).
+
+<br>
+<img align="center" src="images/AlignedPrompts.png">
+<p align="center">Figure: AlignedPrompts for Image Classification</p>
+
+### Results
+#### 1. TPT + CoOp
+#### 2. DiffTPT + CoOp
+
+### Conclusion
+
 
 
 
